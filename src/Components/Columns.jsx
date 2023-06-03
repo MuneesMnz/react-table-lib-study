@@ -1,18 +1,24 @@
+import { format } from "date-fns";
+import ColumnFilter from "./ColumnFilter";
+
 export const COLUMNS = [
   {
     Header: "Id",
     accessor: "id",
     Footer: "Id",
+    Filter: ColumnFilter,
   },
   {
     Header: "First Name",
     accessor: "first_name",
     Footer: "Firest Name",
+    Filter: ColumnFilter,
   },
   {
     Header: "Last Name",
     accessor: "last_name",
     Footer: "Last Name",
+    Filter: ColumnFilter,
   },
   // {
   //     Header:"Email",
@@ -22,11 +28,27 @@ export const COLUMNS = [
     Header: "Date of Birth",
     accessor: "date_of_birth",
     Footer: "Date of Birth",
+
+    // sortType: (rowA, rowB, coulmnId) => {
+    //   const DateA = format(rowA.values[coulmnId], "YYYY-MM-DD", true);
+    //   const DateB = format(rowB.values[coulmnId], "YYYY-MM-DD", true);
+    //   if (!DateA.isValid() || DateB.isValid()) return 0;
+    //   if (DateA.isBefore(DateB)) return -1;
+    //   if (DateA.isAfter(DateB)) return 1;
+    //   return 0;
+    // },
+
+    // sortType: 'datetime',
+    Cell: ({ value }) => {
+      return format(new Date(value), "dd/MM/yyyy");
+    },
+    Filter: ColumnFilter,
   },
   {
     Header: "Gender",
     accessor: "gender",
     Footer: "Gender",
+    Filter: ColumnFilter,
   },
   // {
   //     Header:"Age",
@@ -36,11 +58,13 @@ export const COLUMNS = [
     Header: "Country",
     accessor: "country",
     Footer: "Country",
+    Filter: ColumnFilter,
   },
   {
     Header: "Phone",
     accessor: "phone",
     Footer: "Phone",
+    Filter: ColumnFilter,
   },
 ];
 

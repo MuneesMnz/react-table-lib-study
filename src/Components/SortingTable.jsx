@@ -1,19 +1,27 @@
 import React, { useMemo } from "react";
-import { useTable } from "react-table";
+import { useTable, useSortBy } from "react-table";
 import MOCK_DATA from "./MOCK_DATA.json";
-import { COLUMNS ,Grouped_Columns } from "./Columns";
+import { COLUMNS, Grouped_Columns } from "./Columns";
 import "./Table.css";
-const BasicTable = () => {
+const SortingTable = () => {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
 
-  const tableInstance = useTable({
-    columns,
-    data,
-  });
+  const {
+    getTableProps,
+    getTableBodyProps,
+    footerGroups,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useSortBy
+  );
 
-  const { getTableProps, getTableBodyProps, footerGroups,headerGroups, rows, prepareRow } =
-    tableInstance;
   return (
     <table {...getTableProps()}>
       <thead>
@@ -22,8 +30,15 @@ const BasicTable = () => {
             <tr {...header.getHeaderGroupProps()}>
               {header.headers.map((column) => {
                 return (
-                  <th {...column.getHeaderProps()}>
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? "🔽"
+                          : "🔼"
+                        : ""}
+                    </span>
                   </th>
                 );
               })}
@@ -44,26 +59,18 @@ const BasicTable = () => {
         })}
       </tbody>
       <tfoot>
-        {
-          footerGroups.map((footerGrp)=>{
-            return(
-              <tr {...footerGrp.getFooterGroupProps()}>
-                {
-                  footerGrp.headers.map(columns=>(
-                    <td {...columns.getFooterProps}>
-                      {
-                        columns.render('Footer')
-                      }
-                    </td>
-                  ))
-                }
-              </tr>
-            )
-          })
-        }
+        {footerGroups.map((footerGrp) => {
+          return (
+            <tr {...footerGrp.getFooterGroupProps()}>
+              {footerGrp.headers.map((columns) => (
+                <td {...columns.getFooterProps}>{columns.render("Footer")}</td>
+              ))}
+            </tr>
+          );
+        })}
       </tfoot>
     </table>
   );
 };
 
-export default BasicTable;
+export default SortingTable;
