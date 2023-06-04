@@ -52,10 +52,11 @@ export const COLUMNS = [
     Footer: "Gender",
     // Filter: ColumnFilter,
   },
-  // {
-  //     Header:"Age",
-  //     accessor:"age"
-  // },
+  {
+      Header:"Age",
+      accessor:"age",
+      Footer:"Age"
+  },
   {
     Header: "Country",
     accessor: "country",
