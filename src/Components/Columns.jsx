@@ -6,13 +6,15 @@ export const COLUMNS = [
     Header: "Id",
     accessor: "id",
     Footer: "Id",
+    sticky: "left",
     // Filter: ColumnFilter
-    disableFilters:true  
+    disableFilters: true,
   },
   {
     Header: "First Name",
     accessor: "first_name",
     Footer: "Firest Name",
+    sticky: "left",
     // Filter: ColumnFilter,
     // disableFilters:true
   },
@@ -20,6 +22,7 @@ export const COLUMNS = [
     Header: "Last Name",
     accessor: "last_name",
     Footer: "Last Name",
+    sticky: "left",
     // Filter: ColumnFilter,
   },
   // {
@@ -30,6 +33,7 @@ export const COLUMNS = [
     Header: "Date of Birth",
     accessor: "date_of_birth",
     Footer: "Date of Birth",
+    
 
     // sortType: (rowA, rowB, coulmnId) => {
     //   const DateA = format(rowA.values[coulmnId], "YYYY-MM-DD", true);
@@ -50,23 +54,27 @@ export const COLUMNS = [
     Header: "Gender",
     accessor: "gender",
     Footer: "Gender",
+    
     // Filter: ColumnFilter,
   },
   {
-      Header:"Age",
-      accessor:"age",
-      Footer:"Age"
+    Header: "Age",
+    accessor: "age",
+    Footer: "Age",
+    
   },
   {
     Header: "Country",
     accessor: "country",
     Footer: "Country",
+    
     // Filter: ColumnFilter,
   },
   {
     Header: "Phone",
     accessor: "phone",
     Footer: "Phone",
+    
     // Filter: ColumnFilter,
   },
 ];
