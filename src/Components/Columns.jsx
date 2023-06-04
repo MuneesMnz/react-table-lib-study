@@ -6,19 +6,21 @@ export const COLUMNS = [
     Header: "Id",
     accessor: "id",
     Footer: "Id",
-    Filter: ColumnFilter,
+    // Filter: ColumnFilter
+    disableFilters:true  
   },
   {
     Header: "First Name",
     accessor: "first_name",
     Footer: "Firest Name",
-    Filter: ColumnFilter,
+    // Filter: ColumnFilter,
+    // disableFilters:true
   },
   {
     Header: "Last Name",
     accessor: "last_name",
     Footer: "Last Name",
-    Filter: ColumnFilter,
+    // Filter: ColumnFilter,
   },
   // {
   //     Header:"Email",
@@ -42,13 +44,13 @@ export const COLUMNS = [
     Cell: ({ value }) => {
       return format(new Date(value), "dd/MM/yyyy");
     },
-    Filter: ColumnFilter,
+    // Filter: ColumnFilter,
   },
   {
     Header: "Gender",
     accessor: "gender",
     Footer: "Gender",
-    Filter: ColumnFilter,
+    // Filter: ColumnFilter,
   },
   // {
   //     Header:"Age",
@@ -58,13 +60,13 @@ export const COLUMNS = [
     Header: "Country",
     accessor: "country",
     Footer: "Country",
-    Filter: ColumnFilter,
+    // Filter: ColumnFilter,
   },
   {
     Header: "Phone",
     accessor: "phone",
     Footer: "Phone",
-    Filter: ColumnFilter,
+    // Filter: ColumnFilter,
   },
 ];
 
