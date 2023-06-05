@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useTable } from "react-table";
 import MOCK_DATA from "./MOCK_DATA.json";
-import { COLUMNS ,Grouped_Columns } from "./Columns";
+import { COLUMNS, Grouped_Columns } from "./Columns";
 import "./Table.css";
 const BasicTable = () => {
   const columns = useMemo(() => COLUMNS, []);
@@ -12,8 +12,14 @@ const BasicTable = () => {
     data,
   });
 
-  const { getTableProps, getTableBodyProps, footerGroups,headerGroups, rows, prepareRow } =
-    tableInstance;
+  const {
+    getTableProps,
+    getTableBodyProps,
+    footerGroups,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = tableInstance;
   return (
     <table {...getTableProps()}>
       <thead>
@@ -44,23 +50,15 @@ const BasicTable = () => {
         })}
       </tbody>
       <tfoot>
-        {
-          footerGroups.map((footerGrp)=>{
-            return(
-              <tr {...footerGrp.getFooterGroupProps()}>
-                {
-                  footerGrp.headers.map(columns=>(
-                    <td {...columns.getFooterProps}>
-                      {
-                        columns.render('Footer')
-                      }
-                    </td>
-                  ))
-                }
-              </tr>
-            )
-          })
-        }
+        {footerGroups.map((footerGrp) => {
+          return (
+            <tr {...footerGrp.getFooterGroupProps()}>
+              {footerGrp.headers.map((columns) => (
+                <td {...columns.getFooterProps}>{columns.render("Footer")}</td>
+              ))}
+            </tr>
+          );
+        })}
       </tfoot>
     </table>
   );
