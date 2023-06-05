@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   useTable,
   useSortBy,
@@ -7,9 +7,13 @@ import {
 } from "react-table";
 import GlobalFilter from "./GlobalFilter";
 
-const TableOne = ({ Columns, Data }) => {
+const TableOne = ({ Columns, Data,refresh }) => {
   const columns = useMemo(() => Columns, []);
   const data = useMemo(() => Data, []);
+
+  useEffect(()=>{
+    console.log(data);
+  },[refresh])
 
   const tableInstance = useTable(
     { columns, data },
@@ -36,11 +40,49 @@ const TableOne = ({ Columns, Data }) => {
     prepareRow,
   } = tableInstance;
 
-  const { globalFilter, pageIndex ,pageSize} = state;
+  const { globalFilter, pageIndex, pageSize } = state;
   const BelowBorder = {
     width: "full",
     borderBottom: "1px solid #e0e0e0",
   };
+  const getPageButtons = () => {
+    const currentPageIndex = pageIndex;
+    const totalPages = pageOptions.length;
+
+    const maxPageButtonsToShow = 4; // Maximum number of page buttons to show
+
+    let startPage = 0;
+    let endPage = totalPages - 1;
+
+    if (totalPages > maxPageButtonsToShow) {
+      const halfMaxButtons = Math.floor(maxPageButtonsToShow / 2);
+
+      if (currentPageIndex <= halfMaxButtons) {
+        endPage = maxPageButtonsToShow - 1;
+      } else if (currentPageIndex >= totalPages - 1 - halfMaxButtons) {
+        startPage = totalPages - maxPageButtonsToShow;
+      } else {
+        startPage = currentPageIndex - halfMaxButtons;
+        endPage = currentPageIndex + halfMaxButtons;
+      }
+    }
+
+    const pageButtons = [];
+    for (let i = startPage; i <= endPage; i++) {
+      pageButtons.push(
+        <button
+          key={i}
+          onClick={() => gotoPage(i)}
+          className={i === currentPageIndex ? "text-red-500" : ""}
+        >
+          {i + 1}
+        </button>
+      );
+    }
+
+    return pageButtons;
+  };
+
   return (
     <div>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
@@ -96,28 +138,43 @@ const TableOne = ({ Columns, Data }) => {
       <div>
         <span>
           Page{" "}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}{" "}
-          </strong>
+          {pageOptions.map((value) => {
+            return (
+              <button
+                key={value}
+                className="p-2"
+                onClick={() => gotoPage(value)}
+              >
+                {value + 1}{" "}
+              </button>
+            );
+          })}
         </span>
         <span>
-           | Go to page : {" "}
-           <input type="number" defaultValue={pageIndex+1} onChange={(e)=>{
-            const pageNumber=e.target.value  ? Number(e.target.value)-1 :0
-            gotoPage(pageNumber)
-           }} style={{width:'50px'}} />
+          | Go to page :{" "}
+          <input
+            type="number"
+            defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              const pageNumber = e.target.value
+                ? Number(e.target.value) - 1
+                : 0;
+              gotoPage(pageNumber);
+            }}
+            style={{ width: "50px" }}
+          />
         </span>
-        <select value={pageSize} onChange={e=>setPageSize(Number(e.target.value))} >
-
-          {
-            [10,25,50].map(pagesize=>{
-              return(
-                <option key={pagesize} value={pagesize}>
-                    {pagesize}
-                </option>
-              )
-            })
-          }
+        <select
+          value={pageSize}
+          onChange={(e) => setPageSize(Number(e.target.value))}
+        >
+          {[10, 25, 50].map((pagesize) => {
+            return (
+              <option key={pagesize} value={pagesize}>
+                {pagesize}
+              </option>
+            );
+          })}
         </select>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {"<<"}
@@ -131,6 +188,7 @@ const TableOne = ({ Columns, Data }) => {
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           {">>"}
         </button>
+        <div>{getPageButtons()}</div>
       </div>
     </div>
   );
