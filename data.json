@@ -1,12 +1,3 @@
 {
-  "product": [
-    {
-      "productName": "kitkat",
-      "price": "20",
-      "description": "choclate",
-      "quantity": "15",
-      "category": "Food",
-      "id": 3
-    }
-  ]
+  "product": []
 }

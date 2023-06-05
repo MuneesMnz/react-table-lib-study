@@ -8,8 +8,8 @@ import {
 import GlobalFilter from "./GlobalFilter";
 
 const TableOne = ({ Columns, Data,refresh }) => {
-  const columns = useMemo(() => Columns, []);
-  const data = useMemo(() => Data, []);
+  const columns = useMemo(() => Columns, [Columns]);
+  const data = useMemo(() => Data, [Data]);
 
   useEffect(()=>{
     console.log(data);
